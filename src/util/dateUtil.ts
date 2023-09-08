@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 
-import LocaleData from 'dayjs/plugin/LocaleData';
+import LocaleData from 'dayjs/plugin/localeData';
 import isBetween from 'dayjs/plugin/isBetween';
 import weekday from 'dayjs/plugin/weekday';
 
