@@ -17,7 +17,7 @@ function HomePage() {
   const { entries } = useEntriesProvider();
   return (
     <Fragment>
-      <PageHeader title="SimpleScale" />
+      <PageHeader title="Simple Scale" />
       <Grid container spacing={2} sx={{ py: 2 }}>
         <Grid item xs={6}>
           <Card sx={{ minHeight: '150px', height: '100%' }}>
