@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { Entry } from '../../data/appData';
 import EntryForm from './EntryForm';
 import FormDialog from '../shared/FormDialog';
-import { useDataProvider } from '../../data/dataContext';
+import { useEntriesProvider } from '../../data/entries/entriesContext';
 
 type Props = {
   open: boolean;
@@ -12,10 +12,7 @@ type Props = {
   onClose: () => void;
 };
 function UpdateEntryDialog({ open, entry, onClose }: Props) {
-  const {
-    data: { entries },
-    updateEntries,
-  } = useDataProvider();
+  const { entries, update } = useEntriesProvider();
 
   const [formValues, setFormValues] = useState<Entry>(entry);
 
@@ -40,9 +37,9 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
       return e;
     });
 
-    await updateEntries(updatedEntries);
+    await update(updatedEntries);
     onClose();
-  }, [entries, entry.id, formValues, onClose, updateEntries]);
+  }, [entries, entry.id, formValues, onClose, update]);
 
   const handleRemoveEntry = useCallback(async () => {
     if (!confirm('Are you sure you want to delete this entry?')) {
@@ -50,9 +47,9 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
     }
 
     const updatedEntries = entries.filter(e => e.id !== entry.id);
-    await updateEntries(updatedEntries);
+    await update(updatedEntries);
     onClose();
-  }, [entries, entry.id, onClose, updateEntries]);
+  }, [entries, entry.id, onClose, update]);
 
   return (
     <FormDialog

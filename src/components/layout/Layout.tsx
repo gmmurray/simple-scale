@@ -9,11 +9,15 @@ import {
   Stack,
   Toolbar,
 } from '@mui/material';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import { routes } from '../../router';
+import { useEffect } from 'react';
 
 function Layout() {
+  const { pathname } = useLocation();
+
+  useEffect(() => window.scrollTo(0, 0), [pathname]);
   return (
     <Box sx={{ pb: 7 }}>
       <AppBar component="nav" sx={{ display: { xs: 'none', sm: 'block' } }}>

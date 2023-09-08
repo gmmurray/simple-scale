@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import { roundToOneDecimal } from '../util/mathUtil';
+import { sort } from 'fast-sort';
+
 export interface Entry {
   timestamp: Date;
   value: number;
@@ -17,7 +21,7 @@ export const getDiffInfo = (
     return undefined;
   }
 
-  const diff = current.value - previous.value;
+  const diff = roundToOneDecimal(current.value - previous.value);
 
   return {
     diff,
@@ -28,3 +32,6 @@ export const getDiffInfo = (
 export const unitLabelMap: Record<Entry['unit'], string> = {
   lbs: 'lbs',
 };
+
+export const sortEntries = (entries: Entry[]) =>
+  sort(entries).desc(entry => dayjs(entry.timestamp).toDate());

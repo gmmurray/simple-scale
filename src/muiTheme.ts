@@ -6,6 +6,12 @@ const theme: ThemeOptions = {
     primary: {
       main: '#FDB750',
     },
+    secondary: {
+      main: '#FD6050',
+    },
+    info: {
+      main: '#50FDB7',
+    },
     background: {
       default: '#0a0a0a',
       paper: '#212121',

@@ -4,17 +4,14 @@ import { Entry } from '../../data/appData';
 import EntryForm from './EntryForm';
 import FormDialog from '../shared/FormDialog';
 import { nanoid } from 'nanoid';
-import { useDataProvider } from '../../data/dataContext';
+import { useEntriesProvider } from '../../data/entries/entriesContext';
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 function AddEntryDialog({ open, onClose }: Props) {
-  const {
-    data: { entries },
-    updateEntries,
-  } = useDataProvider();
+  const { entries, update } = useEntriesProvider();
 
   const [formValues, setFormValues] = useState<Entry>(defaultValues);
 
@@ -24,9 +21,9 @@ function AddEntryDialog({ open, onClose }: Props) {
 
   const handleAddEntry = useCallback(async () => {
     const updatedEntries = entries.concat({ ...formValues, id: nanoid() });
-    await updateEntries(updatedEntries);
+    await update(updatedEntries);
     onClose();
-  }, [entries, formValues, onClose, updateEntries]);
+  }, [entries, formValues, onClose, update]);
 
   return (
     <FormDialog

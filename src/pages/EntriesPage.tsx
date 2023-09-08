@@ -7,24 +7,18 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { Entry, getDiffInfo } from '../data/appData';
-import { Fragment, useState } from 'react';
+import { getDiffInfo, sortEntries } from '../data/appData';
 
+import { Fragment } from 'react';
 import PageHeader from '../components/layout/PageHeader';
-import UpdateEntryDialog from '../components/entries/UpdateEntryDialog';
 import dayjs from 'dayjs';
-import { sort } from 'fast-sort';
-import { useDataProvider } from '../data/dataContext';
+import { roundToOneDecimal } from '../util/mathUtil';
+import { useEntriesProvider } from '../data/entries/entriesContext';
 
 function EntriesPage() {
-  const {
-    data: { entries },
-  } = useDataProvider();
-  const [selectedEntry, setSelectedEntry] = useState<Entry | undefined>(
-    undefined,
-  );
+  const { entries, selectEntry } = useEntriesProvider();
 
-  const visibleEntries = sort(entries).desc(e => e.timestamp);
+  const visibleEntries = sortEntries(entries);
 
   return (
     <Fragment>
@@ -55,7 +49,7 @@ function EntriesPage() {
               divider={index !== visibleEntries.length - 1}
               disablePadding
             >
-              <ListItemButton onClick={() => setSelectedEntry(entry)}>
+              <ListItemButton onClick={() => selectEntry(entry)}>
                 <Grid
                   container
                   spacing={1}
@@ -71,7 +65,7 @@ function EntriesPage() {
                     </Tooltip>
                   </Grid>
                   <Grid item xs={6}>
-                    {`${entry.value} ${entry.unit}`}
+                    {`${roundToOneDecimal(entry.value)} ${entry.unit}`}
                   </Grid>
                   {!!diffInfo && (
                     <Grid item xs={3}>
@@ -88,13 +82,6 @@ function EntriesPage() {
           );
         })}
       </List>
-      {selectedEntry && (
-        <UpdateEntryDialog
-          open={!!selectedEntry}
-          onClose={() => setSelectedEntry(undefined)}
-          entry={selectedEntry}
-        />
-      )}
     </Fragment>
   );
 }

@@ -1,14 +1,14 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useDataProvider } from '../../data/dataContext';
+import { useEntriesProvider } from '../../data/entries/entriesContext';
 
 type Props = {
   title: string;
 };
 
 function PageHeader({ title }: Props) {
-  const { toggleAddDialog } = useDataProvider();
+  const { toggleAddDialog } = useEntriesProvider();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box>

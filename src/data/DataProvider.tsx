@@ -1,4 +1,3 @@
-import { AppData, Entry } from './appData';
 import { Box, CircularProgress } from '@mui/material';
 import {
   DataProviderContext,
@@ -8,13 +7,13 @@ import {
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import datastore, { loadWithDefault } from '../localForage';
 
-import AddEntryDialog from '../components/entries/AddEntryDialog';
+import { AppData } from './appData';
+import EntriesProvider from './entries/EntriesProvider';
 
 type DataProviderProps = PropsWithChildren;
 function DataProvider({ children }: DataProviderProps) {
   const [loading, setLoading] = useState(true);
   const [appData, setAppData] = useState<AppData>({ entries: [] });
-  const [addOpen, setAddOpen] = useState(false);
 
   const loadAppData = useCallback(async () => {
     const data = await loadWithDefault(
@@ -42,17 +41,10 @@ function DataProvider({ children }: DataProviderProps) {
     [appData, loadAppData],
   );
 
-  const handleEntriesChange = useCallback(
-    async (entries: Entry[]) => handleAppDataChange({ entries }),
-    [handleAppDataChange],
-  );
-
   const contextValue: DataProviderValue = {
     loading,
     updateData: handleAppDataChange,
-    updateEntries: handleEntriesChange,
     data: appData,
-    toggleAddDialog: () => setAddOpen(!addOpen),
   };
 
   if (loading) {
@@ -61,8 +53,7 @@ function DataProvider({ children }: DataProviderProps) {
 
   return (
     <DataProviderContext.Provider value={contextValue}>
-      {children}
-      <AddEntryDialog open={addOpen} onClose={() => setAddOpen(false)} />
+      <EntriesProvider>{children}</EntriesProvider>
     </DataProviderContext.Provider>
   );
 }
