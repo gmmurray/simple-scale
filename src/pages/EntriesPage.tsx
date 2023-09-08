@@ -1,5 +1,5 @@
 import {
-  Box,
+  Chip,
   Grid,
   List,
   ListItem,
@@ -34,7 +34,7 @@ function EntriesPage() {
           <Grid
             container
             spacing={1}
-            sx={{ textAlign: 'center', color: 'text.secondary' }}
+            sx={{ color: 'text.secondary', textAlign: 'center' }}
           >
             <Grid item xs={3}>
               <Typography variant="overline">Date</Typography>
@@ -53,9 +53,14 @@ function EntriesPage() {
             <ListItem
               key={entry.id}
               divider={index !== visibleEntries.length - 1}
+              disablePadding
             >
               <ListItemButton onClick={() => setSelectedEntry(entry)}>
-                <Grid container spacing={1} sx={{ textAlign: 'center' }}>
+                <Grid
+                  container
+                  spacing={1}
+                  sx={{ textAlign: 'center', alignItems: 'center' }}
+                >
                   <Grid item xs={3}>
                     <Tooltip
                       title={dayjs(entry.timestamp).toDate().toLocaleString()}
@@ -70,17 +75,11 @@ function EntriesPage() {
                   </Grid>
                   {!!diffInfo && (
                     <Grid item xs={3}>
-                      <Box
-                        component="span"
-                        sx={{
-                          color: theme =>
-                            theme.palette[
-                              diffInfo.desirable ? 'success' : 'error'
-                            ].main,
-                        }}
-                      >
-                        {`${diffInfo.diff} ${entry.unit}`}
-                      </Box>
+                      <Chip
+                        label={`${diffInfo.diff} ${entry.unit}`}
+                        color={diffInfo.desirable ? 'success' : 'error'}
+                        variant="outlined"
+                      />
                     </Grid>
                   )}
                 </Grid>
