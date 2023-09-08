@@ -10,7 +10,6 @@ import {
 import { getDiffInfo, sortEntries } from '../data/appData';
 
 import { Fragment } from 'react';
-import PageHeader from '../components/layout/PageHeader';
 import dayjs from 'dayjs';
 import { roundToOneDecimal } from '../util/mathUtil';
 import { useEntriesProvider } from '../data/entries/entriesContext';
@@ -22,7 +21,6 @@ function EntriesPage() {
 
   return (
     <Fragment>
-      <PageHeader title="Entries" />
       <List>
         <ListItem divider>
           <Grid

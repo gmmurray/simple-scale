@@ -11,10 +11,15 @@ import {
 } from '@mui/material';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
+import PageHeader from './PageHeader';
 import { routes } from '../../router';
 import { useEffect } from 'react';
 
-function Layout() {
+type Props = {
+  pageTitle: string;
+};
+
+function Layout({ pageTitle }: Props) {
   const { pathname } = useLocation();
 
   useEffect(() => window.scrollTo(0, 0), [pathname]);
@@ -56,6 +61,7 @@ function Layout() {
       </AppBar>
       <Toolbar sx={{ display: { xs: 'none', sm: 'block' } }} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
+        <PageHeader title={pageTitle} />
         <Outlet />
       </Container>
       <Paper
@@ -67,7 +73,7 @@ function Layout() {
           display: { xs: 'block', sm: 'none' },
         }}
       >
-        <BottomNavigation showLabels>
+        <BottomNavigation showLabels sx={{ height: '70px' }}>
           {routes.map((page, index) => {
             return (
               <BottomNavigationAction

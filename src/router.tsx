@@ -13,7 +13,7 @@ export const routes = [
     label: 'Home',
     path: '/',
     icon: <HomeIcon />,
-    element: <Layout />,
+    element: <Layout pageTitle="Simple Scale" />,
     children: [
       {
         path: '',
@@ -26,7 +26,7 @@ export const routes = [
     label: 'Entries',
     path: '/entries',
     icon: <ListIcon />,
-    element: <Layout />,
+    element: <Layout pageTitle="Entries" />,
     children: [
       {
         path: '',
@@ -38,7 +38,7 @@ export const routes = [
     label: 'Stats',
     path: '/stats',
     icon: <BarChartIcon />,
-    element: <Layout />,
+    element: <Layout pageTitle="Stats" />,
     children: [
       {
         path: '',

@@ -1,13 +1,19 @@
 import {
+  Box,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
+import {
   EntryReportType,
   entryReportTypeLabelMap,
 } from '../data/entries/entryStats';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import { Fragment, useState } from 'react';
 
 import AllTimeStats from '../components/entries/stats/AllTimeStats';
 import MonthStats from '../components/entries/stats/MonthStats';
-import PageHeader from '../components/layout/PageHeader';
 import WeekStats from '../components/entries/stats/WeekStats';
 import YearStats from '../components/entries/stats/YearStats';
 
@@ -27,7 +33,6 @@ function StatsPage() {
   };
   return (
     <Fragment>
-      <PageHeader title="Stats" />
       <Grid container spacing={2} sx={{ my: 2 }}>
         <Grid item xs={6}>
           <FormControl fullWidth>
@@ -48,7 +53,7 @@ function StatsPage() {
           </FormControl>
         </Grid>
       </Grid>
-      {renderReport()}
+      <Box sx={{ pb: 0.125 }}>{renderReport()}</Box>
     </Fragment>
   );
 }
