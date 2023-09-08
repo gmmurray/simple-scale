@@ -4,12 +4,11 @@ const theme: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      dark: '#0A2472',
-      main: '#4d4e91',
+      main: '#FDB750',
     },
     background: {
-      paper: '#2a2930',
-      default: '#15141b',
+      default: '#0a0a0a',
+      paper: '#212121',
     },
   },
 };

@@ -1,5 +1,12 @@
+import { Fragment } from 'react';
+import PageHeader from '../components/layout/PageHeader';
+
 function StatsPage() {
-  return <div>StatsPage</div>;
+  return (
+    <Fragment>
+      <PageHeader title="Stats" />
+    </Fragment>
+  );
 }
 
 export default StatsPage;

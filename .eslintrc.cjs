@@ -16,6 +16,12 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 'latest',

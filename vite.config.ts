@@ -14,7 +14,7 @@ export default defineConfig({
         name: 'SimpleScale',
         short_name: 'SimpleScale',
         description: 'Keep track of your weight journey',
-        theme_color: '#0A2472',
+        theme_color: '#FDB750',
         icons: [
           {
             src: 'favicon.ico',

@@ -8,30 +8,39 @@ import {
   Paper,
   Stack,
   Toolbar,
-  Typography,
 } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 import { routes } from '../../router';
-import { useState } from 'react';
 
 function Layout() {
-  const [bottomNavValue, setBottomNavValue] = useState(0);
-
   return (
     <Box sx={{ pb: 7 }}>
       <AppBar component="nav" sx={{ display: { xs: 'none', sm: 'block' } }}>
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              SimpleScale
-            </Typography>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <img src="/favicon.ico" height="40" />
+            </Box>
             <Stack direction="row" spacing={2}>
               {routes.map((item, index) => (
                 <MUILink
-                  component={Link}
+                  component={NavLink}
                   key={index}
-                  sx={{ color: 'inherit' }}
+                  sx={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    '&.active': {
+                      color: theme => theme.palette.primary.light,
+                    },
+                  }}
                   to={item.path}
                 >
                   {item.label}
@@ -54,19 +63,20 @@ function Layout() {
           display: { xs: 'block', sm: 'none' },
         }}
       >
-        <BottomNavigation
-          showLabels
-          value={bottomNavValue}
-          onChange={(_, newValue: number) => setBottomNavValue(newValue)}
-        >
+        <BottomNavigation showLabels>
           {routes.map((page, index) => {
             return (
               <BottomNavigationAction
                 key={index}
                 label={page.label}
-                component={Link}
+                component={NavLink}
                 to={page.path}
                 icon={page.icon}
+                sx={{
+                  '&.active': {
+                    color: theme => theme.palette.primary.main,
+                  },
+                }}
               />
             );
           })}

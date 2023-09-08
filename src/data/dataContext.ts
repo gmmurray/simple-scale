@@ -1,10 +1,12 @@
+import { AppData, Entry } from './appData';
 import { createContext, useContext } from 'react';
-
-import { AppData } from './appData';
 
 export type DataProviderValue = {
   loading: boolean;
   data: AppData;
+  updateData: (updates: Partial<AppData>) => Promise<void> | void;
+  updateEntries: (entries: Entry[]) => Promise<void> | void;
+  toggleAddDialog: () => void;
 };
 
 export const defaultDataProviderValue: DataProviderValue = {
@@ -12,6 +14,9 @@ export const defaultDataProviderValue: DataProviderValue = {
   data: {
     entries: [],
   },
+  updateData: () => {},
+  updateEntries: () => {},
+  toggleAddDialog: () => {},
 };
 
 export const DataProviderContext = createContext(defaultDataProviderValue);
