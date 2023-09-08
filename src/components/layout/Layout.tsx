@@ -27,7 +27,7 @@ function Layout() {
                 alignItems: 'center',
               }}
             >
-              <img src="/favicon.ico" height="40" />
+              <img src="/icon_transparent.png" height="40" />
             </Box>
             <Stack direction="row" spacing={2}>
               {routes.map((item, index) => (
