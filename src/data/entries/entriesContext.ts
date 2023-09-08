@@ -7,6 +7,7 @@ export type EntriesProviderValue = {
   update: (entries: Entry[]) => Promise<void> | void;
   toggleAddDialog: () => void;
   selectEntry: (entry: Entry | undefined) => void;
+  toggleCsvDialog: () => void;
 };
 
 export const defaultEntriesProviderValue: EntriesProviderValue = {
@@ -14,6 +15,7 @@ export const defaultEntriesProviderValue: EntriesProviderValue = {
   update: () => {},
   toggleAddDialog: () => {},
   selectEntry: () => {},
+  toggleCsvDialog: () => {},
 };
 
 export const EntriesProviderContext = createContext(

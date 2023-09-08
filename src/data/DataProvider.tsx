@@ -7,6 +7,7 @@ import {
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import datastore, { loadWithDefault } from '../localForage';
 
+import { APP_DATA_STORAGE_KEY } from './constants';
 import { AppData } from './appData';
 import EntriesProvider from './entries/EntriesProvider';
 
@@ -17,7 +18,7 @@ function DataProvider({ children }: DataProviderProps) {
 
   const loadAppData = useCallback(async () => {
     const data = await loadWithDefault(
-      'app-data',
+      APP_DATA_STORAGE_KEY,
       defaultDataProviderValue.data,
     );
 
@@ -35,7 +36,7 @@ function DataProvider({ children }: DataProviderProps) {
 
   const handleAppDataChange = useCallback(
     async (updates: Partial<AppData>) => {
-      await datastore.setItem('app-data', { ...appData, ...updates });
+      await datastore.setItem(APP_DATA_STORAGE_KEY, { ...appData, ...updates });
       await loadAppData();
     },
     [appData, loadAppData],

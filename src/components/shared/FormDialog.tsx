@@ -21,7 +21,7 @@ type Props = PropsWithChildren<{
   open: boolean;
   onClose: () => void;
   title: string;
-  onSave: () => void | Promise<void>;
+  onSave?: () => void | Promise<void>;
 }>;
 
 function FormDialog({ open, onClose, title, onSave, children }: Props) {
@@ -51,9 +51,11 @@ function FormDialog({ open, onClose, title, onSave, children }: Props) {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 {title}
               </Typography>
-              <Button autoFocus color="inherit" onClick={onSave}>
-                Save
-              </Button>
+              {!!onSave && (
+                <Button autoFocus color="inherit" onClick={onSave}>
+                  Save
+                </Button>
+              )}
             </Toolbar>
           </AppBar>
         )}
@@ -62,11 +64,13 @@ function FormDialog({ open, onClose, title, onSave, children }: Props) {
         {!isSmallScreen && (
           <DialogActions>
             <Button onClick={onClose} color="inherit">
-              Cancel
+              Close
             </Button>
-            <Button onClick={onSave} variant="contained">
-              Save
-            </Button>
+            {!!onSave && (
+              <Button onClick={onSave} variant="contained">
+                Save
+              </Button>
+            )}
           </DialogActions>
         )}
       </Dialog>

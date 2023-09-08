@@ -1,7 +1,12 @@
-import { EntriesProviderContext, EntriesProviderValue } from './entriesContext';
+import {
+  EntriesProviderContext,
+  EntriesProviderValue,
+  defaultEntriesProviderValue,
+} from './entriesContext';
 import { PropsWithChildren, useCallback, useState } from 'react';
 
 import AddEntryDialog from '../../components/entries/AddEntryDialog';
+import EntriesCsvDialog from '../../components/entries/EntriesCsvDialog';
 import { Entry } from '../appData';
 import UpdateEntryDialog from '../../components/entries/UpdateEntryDialog';
 import { useDataProvider } from '../dataContext';
@@ -18,6 +23,7 @@ function EntriesProvider({ children }: EntriesProviderProps) {
   const [selectedEntry, setSelectedEntry] = useState<Entry | undefined>(
     undefined,
   );
+  const [csvOpen, setCsvOpen] = useState(false);
 
   const handleEntriesChange = useCallback(
     async (updatedEntries: Entry[]) => updateData({ entries: updatedEntries }),
@@ -34,11 +40,18 @@ function EntriesProvider({ children }: EntriesProviderProps) {
     [],
   );
 
+  const handleToggleCsvDialog = useCallback(
+    () => setCsvOpen(state => !state),
+    [],
+  );
+
   const contextValue: EntriesProviderValue = {
+    ...defaultEntriesProviderValue,
     entries,
     update: handleEntriesChange,
     toggleAddDialog: handleToggleAddDialog,
     selectEntry: handleSelectEntry,
+    toggleCsvDialog: handleToggleCsvDialog,
   };
 
   return (
@@ -52,6 +65,7 @@ function EntriesProvider({ children }: EntriesProviderProps) {
           entry={selectedEntry}
         />
       )}
+      <EntriesCsvDialog open={csvOpen} onClose={handleToggleCsvDialog} />
     </EntriesProviderContext.Provider>
   );
 }

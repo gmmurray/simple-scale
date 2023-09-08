@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Chip,
   Grid,
   List,
@@ -15,12 +17,17 @@ import { roundToOneDecimal } from '../util/mathUtil';
 import { useEntriesProvider } from '../data/entries/entriesContext';
 
 function EntriesPage() {
-  const { entries, selectEntry } = useEntriesProvider();
+  const { entries, selectEntry, toggleCsvDialog } = useEntriesProvider();
 
   const visibleEntries = sortEntries(entries);
 
   return (
     <Fragment>
+      <Box>
+        <Button variant="contained" color="info" onClick={toggleCsvDialog}>
+          Import/Export
+        </Button>
+      </Box>
       <List>
         <ListItem divider>
           <Grid
