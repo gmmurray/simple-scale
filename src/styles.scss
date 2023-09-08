@@ -1,0 +1,10 @@
+.entry-line-chart-container {
+  .MuiChartsAxis-directionX {
+    .MuiChartsAxis-tickLabel {
+      display: none;
+    }
+    .MuiChartsAxis-tickContainer {
+      display: none;
+    }
+  }
+}

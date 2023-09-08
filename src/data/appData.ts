@@ -33,5 +33,5 @@ export const unitLabelMap: Record<Entry['unit'], string> = {
   lbs: 'lbs',
 };
 
-export const sortEntries = (entries: Entry[]) =>
-  sort(entries).desc(entry => dayjs(entry.timestamp).toDate());
+export const sortEntries = (entries: Entry[], dir: 'asc' | 'desc' = 'desc') =>
+  sort(entries)[dir](entry => dayjs(entry.timestamp).toDate());

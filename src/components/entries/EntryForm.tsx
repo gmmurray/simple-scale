@@ -24,10 +24,7 @@ function EntryForm({ values, onChange }: Props) {
           value={values.value}
           label="Weight"
           onChange={e =>
-            onChange<Entry, 'value'>(
-              'value',
-              e.target.value as unknown as number,
-            )
+            onChange<Entry, 'value'>('value', Number(e.target.value))
           }
           inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
           fullWidth

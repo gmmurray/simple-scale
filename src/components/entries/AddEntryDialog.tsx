@@ -20,7 +20,10 @@ function AddEntryDialog({ open, onClose }: Props) {
   }, [open]);
 
   const handleAddEntry = useCallback(async () => {
-    const updatedEntries = entries.concat({ ...formValues, id: nanoid() });
+    const updatedEntries = entries.concat({
+      ...formValues,
+      id: nanoid(),
+    });
     await update(updatedEntries);
     onClose();
   }, [entries, formValues, onClose, update]);
