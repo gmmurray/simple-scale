@@ -49,7 +49,7 @@ export default AddEntryDialog;
 
 const defaultValues: Entry = {
   id: '',
-  value: 0,
+  value: '' as unknown as number,
   timestamp: new Date(),
   unit: 'lbs',
 };

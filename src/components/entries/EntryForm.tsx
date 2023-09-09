@@ -26,7 +26,7 @@ function EntryForm({ values, onChange }: Props) {
           onChange={e =>
             onChange<Entry, 'value'>('value', Number(e.target.value))
           }
-          inputProps={{ type: 'number' }}
+          inputProps={{ type: 'number', step: '.1', min: 1 }}
           fullWidth
         />
       </Grid>
