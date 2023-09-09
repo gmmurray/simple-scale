@@ -7,6 +7,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
+import { useCallback, useState } from 'react';
 
 import { DateTimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
@@ -17,22 +18,31 @@ type Props = {
 };
 
 function EntryForm({ values, onChange }: Props) {
+  const [valueField, setValueField] = useState(values.value.toString());
+
+  const handleValueFieldChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const str = event.target.value;
+      setValueField(str);
+      const num = parseFloat(str);
+      onChange<Entry, 'value'>('value', num);
+    },
+    [onChange],
+  );
+
+  const valueError = Number.isNaN(values.value)
+    ? 'Weight must be a valid number'
+    : undefined;
   return (
     <Grid container spacing={2} sx={{ py: 2 }}>
       <Grid item xs={12} sm={6}>
         <TextField
-          value={values.value}
+          value={valueField}
           label="Weight"
-          onChange={e =>
-            onChange<Entry, 'value'>('value', Number(e.target.value))
-          }
-          inputProps={{
-            type: 'number',
-            step: '.01',
-            min: 1,
-            pattern: '[0-9]+([.,][0-9]+)?',
-          }}
+          onChange={handleValueFieldChange}
           fullWidth
+          error={!!valueError}
+          helperText={valueError}
         />
       </Grid>
       <Grid item xs={12} sm={6}>

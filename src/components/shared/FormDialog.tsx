@@ -22,9 +22,17 @@ type Props = PropsWithChildren<{
   onClose: () => void;
   title: string;
   onSave?: () => void | Promise<void>;
+  disabled?: boolean;
 }>;
 
-function FormDialog({ open, onClose, title, onSave, children }: Props) {
+function FormDialog({
+  open,
+  onClose,
+  title,
+  onSave,
+  children,
+  disabled,
+}: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
@@ -52,7 +60,12 @@ function FormDialog({ open, onClose, title, onSave, children }: Props) {
                 {title}
               </Typography>
               {!!onSave && (
-                <Button autoFocus color="inherit" onClick={onSave}>
+                <Button
+                  autoFocus
+                  color="inherit"
+                  onClick={onSave}
+                  disabled={disabled}
+                >
                   Save
                 </Button>
               )}
@@ -67,7 +80,7 @@ function FormDialog({ open, onClose, title, onSave, children }: Props) {
               Close
             </Button>
             {!!onSave && (
-              <Button onClick={onSave} variant="contained">
+              <Button onClick={onSave} variant="contained" disabled={disabled}>
                 Save
               </Button>
             )}

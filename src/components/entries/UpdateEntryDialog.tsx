@@ -20,7 +20,13 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
     setFormValues(entry);
   }, [entry, open]);
 
+  const isFormValid = !Number.isNaN(formValues.value);
+
   const handleUpdateEntry = useCallback(async () => {
+    if (!isFormValid) {
+      return;
+    }
+
     const existing = entries.find(e => e.id === entry.id);
     if (!existing) {
       return;
@@ -39,7 +45,7 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
 
     await update(updatedEntries);
     onClose();
-  }, [entries, entry.id, formValues, onClose, update]);
+  }, [entries, entry.id, formValues, isFormValid, onClose, update]);
 
   const handleRemoveEntry = useCallback(async () => {
     if (!confirm('Are you sure you want to delete this entry?')) {
@@ -57,6 +63,7 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
       onClose={onClose}
       title="Update entry"
       onSave={handleUpdateEntry}
+      disabled={!isFormValid}
     >
       <Button
         size="small"

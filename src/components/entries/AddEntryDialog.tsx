@@ -19,14 +19,19 @@ function AddEntryDialog({ open, onClose }: Props) {
     setFormValues(defaultValues);
   }, [open]);
 
+  const isFormValid = !Number.isNaN(formValues.value);
+
   const handleAddEntry = useCallback(async () => {
+    if (!isFormValid) {
+      return;
+    }
     const updatedEntries = entries.concat({
       ...formValues,
       id: nanoid(),
     });
     await update(updatedEntries);
     onClose();
-  }, [entries, formValues, onClose, update]);
+  }, [entries, formValues, isFormValid, onClose, update]);
 
   return (
     <FormDialog
@@ -34,6 +39,7 @@ function AddEntryDialog({ open, onClose }: Props) {
       onClose={onClose}
       title="New entry"
       onSave={handleAddEntry}
+      disabled={!isFormValid}
     >
       <EntryForm
         values={formValues}
