@@ -24,7 +24,7 @@ function EntriesPage() {
   return (
     <Fragment>
       <Box>
-        <Button variant="contained" color="info" onClick={toggleCsvDialog}>
+        <Button variant="outlined" onClick={toggleCsvDialog}>
           Import/Export
         </Button>
       </Box>
