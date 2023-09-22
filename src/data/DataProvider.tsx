@@ -1,3 +1,4 @@
+import { APP_DATA_STORAGE_KEY, DEFAULT_APP_DATA } from './constants';
 import { Box, CircularProgress } from '@mui/material';
 import {
   DataProviderContext,
@@ -7,14 +8,14 @@ import {
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import datastore, { loadWithDefault } from '../localForage';
 
-import { APP_DATA_STORAGE_KEY } from './constants';
 import { AppData } from './appData';
 import EntriesProvider from './entries/EntriesProvider';
+import SettingsProvider from './settings/SettingsProvider';
 
 type DataProviderProps = PropsWithChildren;
 function DataProvider({ children }: DataProviderProps) {
   const [loading, setLoading] = useState(true);
-  const [appData, setAppData] = useState<AppData>({ entries: [] });
+  const [appData, setAppData] = useState<AppData>(DEFAULT_APP_DATA);
 
   const loadAppData = useCallback(async () => {
     const data = await loadWithDefault(
@@ -54,7 +55,9 @@ function DataProvider({ children }: DataProviderProps) {
 
   return (
     <DataProviderContext.Provider value={contextValue}>
-      <EntriesProvider>{children}</EntriesProvider>
+      <SettingsProvider>
+        <EntriesProvider>{children}</EntriesProvider>
+      </SettingsProvider>
     </DataProviderContext.Provider>
   );
 }

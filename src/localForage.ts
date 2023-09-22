@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+import { merge } from 'merge-anything';
 
 const datastore = localforage.createInstance({
   name: 'simple-scale',
@@ -12,5 +13,5 @@ export async function loadWithDefault<TData>(
 ): Promise<TData> {
   const result = await datastore.getItem<TData>(key);
 
-  return result ?? defaultValue;
+  return result ? (merge(defaultValue, result) as TData) : defaultValue;
 }

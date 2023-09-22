@@ -6,27 +6,51 @@ import {
   List,
   ListItem,
   ListItemButton,
+  Link as MUILink,
   Tooltip,
   Typography,
 } from '@mui/material';
-import { getDiffInfo, sortEntries } from '../data/appData';
+import {
+  getDiffInfo,
+  getOverallWeightGoal,
+  isAtOrPastWeightGoal,
+  sortEntries,
+} from '../data/appData';
 
 import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { roundToOneDecimal } from '../util/mathUtil';
 import { useEntriesProvider } from '../data/entries/entriesContext';
+import { useSettingsProvider } from '../data/settings/settingsContext';
 
 function EntriesPage() {
+  const { settings } = useSettingsProvider();
   const { entries, selectEntry, toggleCsvDialog } = useEntriesProvider();
 
   const visibleEntries = sortEntries(entries);
+  const overallWeightGoal = getOverallWeightGoal(settings);
+  const firstGoalEntry = sortEntries(entries, 'asc').find(entry =>
+    isAtOrPastWeightGoal(entry, settings),
+  );
 
   return (
     <Fragment>
-      <Box>
+      <Box sx={{ display: 'flex', alignItems: 'end' }}>
         <Button variant="outlined" onClick={toggleCsvDialog}>
           Import/Export
         </Button>
+        {settings.goals.weight && (
+          <MUILink
+            variant="body1"
+            color="text.secondary"
+            sx={{ ml: 'auto' }}
+            component={Link}
+            to="/settings#goals-weight"
+          >
+            {`Goal Weight: ${settings.goals.weight.end} ${settings.goals.weight.unit}`}
+          </MUILink>
+        )}
       </Box>
       <List>
         <ListItem divider>
@@ -47,14 +71,21 @@ function EntriesPage() {
           </Grid>
         </ListItem>
         {visibleEntries.map((entry, index) => {
-          const diffInfo = getDiffInfo(entry, visibleEntries[index + 1]);
+          const diffInfo = getDiffInfo(
+            entry,
+            visibleEntries[index + 1],
+            overallWeightGoal,
+          );
           return (
             <ListItem
               key={entry.id}
               divider={index !== visibleEntries.length - 1}
               disablePadding
             >
-              <ListItemButton onClick={() => selectEntry(entry)}>
+              <ListItemButton
+                onClick={() => selectEntry(entry)}
+                selected={firstGoalEntry && firstGoalEntry.id === entry.id}
+              >
                 <Grid
                   container
                   spacing={1}
@@ -75,7 +106,11 @@ function EntriesPage() {
                   {!!diffInfo && (
                     <Grid item xs={3}>
                       <Chip
-                        label={`${diffInfo.diff} ${entry.unit}`}
+                        label={`${
+                          diffInfo.diff > 0
+                            ? `+${diffInfo.diff}`
+                            : diffInfo.diff
+                        } ${entry.unit}`}
                         color={diffInfo.desirable ? 'success' : 'error'}
                         variant="outlined"
                       />

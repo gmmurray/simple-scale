@@ -5,6 +5,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import HomePage from './pages/HomePage';
 import Layout from './components/layout/Layout';
 import ListIcon from '@mui/icons-material/List';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsPage from './pages/SettingsPage';
 import StatsPage from './pages/StatsPage';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -43,6 +45,18 @@ export const routes = [
       {
         path: '',
         element: <StatsPage />,
+      },
+    ],
+  },
+  {
+    label: 'Settings',
+    path: '/settings',
+    icon: <SettingsIcon />,
+    element: <Layout pageTitle="Settings" />,
+    children: [
+      {
+        path: '',
+        element: <SettingsPage />,
       },
     ],
   },

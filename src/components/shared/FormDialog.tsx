@@ -9,13 +9,12 @@ import {
   Slide,
   Toolbar,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import React, { Fragment, PropsWithChildren } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { TransitionProps } from '@mui/material/transitions';
+import { useIsSmallScreen } from '../../util/useIsSmallScreen';
 
 type Props = PropsWithChildren<{
   open: boolean;
@@ -33,8 +32,7 @@ function FormDialog({
   children,
   disabled,
 }: Props) {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useIsSmallScreen();
   return (
     <Fragment>
       <Dialog

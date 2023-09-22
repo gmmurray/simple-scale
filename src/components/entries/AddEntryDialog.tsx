@@ -1,11 +1,11 @@
+import { Entry, isGoalNewRecord, isNewEntryRecord } from '../../data/appData';
 import { useCallback, useEffect, useState } from 'react';
 
-import { Entry } from '../../data/appData';
 import EntryForm from './EntryForm';
 import FormDialog from '../shared/FormDialog';
-import { getMinValue } from '../../util/mathUtil';
 import { nanoid } from 'nanoid';
 import { useEntriesProvider } from '../../data/entries/entriesContext';
+import { useSettingsProvider } from '../../data/settings/settingsContext';
 import { useSnackbarAlert } from '../shared/snackbar/snackbarContext';
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
   onClose: () => void;
 };
 function AddEntryDialog({ open, onClose }: Props) {
+  const { settings } = useSettingsProvider();
   const { entries, update } = useEntriesProvider();
   const snackbar = useSnackbarAlert();
 
@@ -37,12 +38,13 @@ function AddEntryDialog({ open, onClose }: Props) {
     });
     await update(updatedEntries);
 
-    if (isNewRecord(formValues, entries)) {
-      console.log('here');
+    if (isGoalNewRecord(formValues, entries, settings)) {
+      snackbar.success(`You've reached your goal!`);
+    } else if (isNewEntryRecord(formValues, entries, settings)) {
       snackbar.success('This is a new personal best!');
     }
     onClose();
-  }, [entries, formValues, isFormValid, onClose, snackbar, update]);
+  }, [entries, formValues, isFormValid, onClose, settings, snackbar, update]);
 
   return (
     <FormDialog
@@ -69,10 +71,4 @@ const defaultValues: Entry = {
   value: '' as unknown as number,
   timestamp: new Date(),
   unit: 'lbs',
-};
-
-const isNewRecord = (entry: Entry, allEntries: Entry[]): boolean => {
-  const minWeight = getMinValue(allEntries.map(e => e.value));
-
-  return entry.value < minWeight;
 };

@@ -6,9 +6,12 @@ import {
   SnackbarAlertType,
 } from './snackbarContext';
 
+import { useIsSmallScreen } from '../../../util/useIsSmallScreen';
+
 export const SnackbarAlertProvider = ({
   children,
 }: React.PropsWithChildren) => {
+  const isSmallScreen = useIsSmallScreen();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('Alert');
   const [description, setDescription] = useState<string | undefined>(undefined);
@@ -61,7 +64,10 @@ export const SnackbarAlertProvider = ({
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{
+          vertical: isSmallScreen ? 'top' : 'bottom',
+          horizontal: 'center',
+        }}
         sx={{ minWidth: '25%' }}
       >
         <Alert
