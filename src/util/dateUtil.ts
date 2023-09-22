@@ -50,4 +50,7 @@ export const isSameMonthThisYear = (
   return queryDate.month() === monthIndex && queryDate.year() === today.year();
 };
 
-export const getWeekdayName = (index: number) => dayjs.weekdaysMin()[index];
+export const getWeekdayNameShort = (index: number) =>
+  dayjs.weekdaysMin()[index];
+
+export const getWeekdayNameLong = (index: number) => dayjs.weekdays()[index];
