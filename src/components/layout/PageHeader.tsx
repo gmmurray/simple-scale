@@ -12,7 +12,7 @@ function PageHeader({ title }: Props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box>
-        <Typography variant="h2" component="h1">
+        <Typography variant="h2" component="h1" id="back-to-top-anchor">
           {title}
         </Typography>
       </Box>

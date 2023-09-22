@@ -12,6 +12,7 @@ import {
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import PageHeader from './PageHeader';
+import ScrollTopButton from './ScrollTopButton';
 import { routes } from '../../router';
 import { useEffect } from 'react';
 
@@ -63,6 +64,7 @@ function Layout({ pageTitle }: Props) {
       <Container maxWidth="lg" sx={{ my: 2 }}>
         <PageHeader title={pageTitle} />
         <Outlet />
+        <ScrollTopButton />
       </Container>
       <Paper
         sx={{
