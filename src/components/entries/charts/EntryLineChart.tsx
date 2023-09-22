@@ -1,6 +1,6 @@
+import { Entry, sortEntries } from '../../../data/appData';
 import { Paper, Typography, useTheme } from '@mui/material';
 
-import { Entry } from '../../../data/appData';
 import { LineChart } from '@mui/x-charts';
 import dayjs from 'dayjs';
 
@@ -15,7 +15,7 @@ function EntryLineChart({ entries, title }: Props) {
     prev.value < curr.value ? prev : curr,
   ).value;
 
-  const orderedEntries = entries.reverse();
+  const orderedEntries = sortEntries(entries, 'asc');
 
   return (
     <Paper sx={{ p: 2 }} className="entry-line-chart-container">
