@@ -1,10 +1,12 @@
+import { Entry, isGoalNewRecord, isNewEntryRecord } from '../../data/appData';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '@mui/material';
-import { Entry } from '../../data/appData';
 import EntryForm from './EntryForm';
 import FormDialog from '../shared/FormDialog';
 import { useEntriesProvider } from '../../data/entries/entriesContext';
+import { useSettingsProvider } from '../../data/settings/settingsContext';
+import { useSnackbarAlert } from '../shared/snackbar/snackbarContext';
 
 type Props = {
   open: boolean;
@@ -12,6 +14,8 @@ type Props = {
   onClose: () => void;
 };
 function UpdateEntryDialog({ open, entry, onClose }: Props) {
+  const snackbar = useSnackbarAlert();
+  const { settings } = useSettingsProvider();
   const { entries, update } = useEntriesProvider();
 
   const [formValues, setFormValues] = useState<Entry>(entry);
@@ -44,8 +48,24 @@ function UpdateEntryDialog({ open, entry, onClose }: Props) {
     });
 
     await update(updatedEntries);
+
+    if (isGoalNewRecord(formValues, entries, settings)) {
+      snackbar.success(`You've reached your goal!`);
+    } else if (isNewEntryRecord(formValues, entries, settings)) {
+      snackbar.success('This is a new personal best!');
+    }
+
     onClose();
-  }, [entries, entry.id, formValues, isFormValid, onClose, update]);
+  }, [
+    entries,
+    entry.id,
+    formValues,
+    isFormValid,
+    onClose,
+    settings,
+    snackbar,
+    update,
+  ]);
 
   const handleRemoveEntry = useCallback(async () => {
     if (!confirm('Are you sure you want to delete this entry?')) {

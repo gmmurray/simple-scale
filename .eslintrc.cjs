@@ -22,6 +22,7 @@ module.exports = {
         checksVoidReturn: false,
       },
     ],
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   parserOptions: {
     ecmaVersion: 'latest',

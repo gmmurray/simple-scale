@@ -113,7 +113,10 @@ export const isGoalNewRecord = (
   }
 
   return (
+    isAtOrPastWeightGoal(entry, settings) &&
     isNewEntryRecord(entry, allEntries, settings) &&
-    !allEntries.some(e => isAtOrPastWeightGoal(e, settings))
+    !allEntries.some(
+      e => e.id !== entry.id && isAtOrPastWeightGoal(e, settings),
+    )
   );
 };
